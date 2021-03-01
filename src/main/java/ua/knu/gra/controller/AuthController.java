@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ua.knu.gra.data.CookieData;
 import ua.knu.gra.data.LoginData;
+import ua.knu.gra.data.RegisterData;
 import ua.knu.gra.model.UserRole;
 
 import javax.servlet.http.HttpSession;
@@ -27,5 +28,12 @@ public class AuthController extends AbstractController {
         }
         CookieData cookieData = setDataToSession(session, loginData, role);
         return ResponseEntity.ok(cookieData);
+    }
+
+    @PostMapping(value = "/register", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> login(@RequestBody RegisterData registerData) {
+        registerData.setPassword(new String(getDecoder().decode(registerData.getPassword())));
+        boolean result = authService.register(registerData);
+        return result ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 }
