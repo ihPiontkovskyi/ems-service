@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.knu.gra.converter.RegisterDataConverter;
 import ua.knu.gra.data.LoginData;
 import ua.knu.gra.data.RegisterData;
 import ua.knu.gra.model.UserModel;
 import ua.knu.gra.model.UserRole;
 import ua.knu.gra.repository.UserRepository;
+import ua.knu.gra.service.common.RegisterReverseDataConverter;
 
 import java.util.Optional;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RegisterDataConverter registerDataConverter;
+    private final RegisterReverseDataConverter registerDataConverter;
 
     public UserRole login(LoginData loginData) {
         Optional<UserModel> user = userRepository.findUserModelByUid(loginData.getUid());
