@@ -1,4 +1,4 @@
-package ua.knu.gra.converter;
+package ua.knu.gra.service.common;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +10,10 @@ import ua.knu.gra.model.UserRole;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class RegisterDataConverter implements Converter<RegisterData, UserModel> {
+public class RegisterReverseDataConverter {
 
     private final PasswordEncoder passwordEncoder;
 
-    @Override
     public UserModel convert(RegisterData data) {
         UserModel userModel = new UserModel();
         userModel.setFirstName(data.getFirstName());

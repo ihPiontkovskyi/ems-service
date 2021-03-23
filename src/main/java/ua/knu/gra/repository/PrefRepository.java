@@ -2,8 +2,8 @@ package ua.knu.gra.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ua.knu.gra.model.DocumentModel;
+import ua.knu.gra.model.GroupPreferencesModel;
 
 @Repository
-public interface DocumentRepository extends JpaRepository<DocumentModel, Integer> {
+public interface PrefRepository extends JpaRepository<GroupPreferencesModel, Integer> {
 }
