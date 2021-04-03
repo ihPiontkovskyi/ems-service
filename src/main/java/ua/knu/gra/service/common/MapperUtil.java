@@ -1,6 +1,7 @@
 package ua.knu.gra.service.common;
 
-import ua.knu.gra.data.PostData;
+import ua.knu.gra.data.message.MessageData;
+import ua.knu.gra.data.post.PostData;
 import ua.knu.gra.data.UserData;
 import ua.knu.gra.data.course.CourseData;
 import ua.knu.gra.data.course.CourseMainPageData;
@@ -79,7 +80,23 @@ public final class MapperUtil {
         data.setDescription(courseModel.getDescription());
         data.setLecturer(mapToUserData(courseModel.getLecturer()));
         data.setPosts(mapAllToPostData(courseModel.getPosts()));
+        data.setMessages(mapAllToMessageData(courseModel.getMessages()));
         return data;
+    }
+
+    public static MessageData mapToMessageData(MessageModel model) {
+        MessageData data = new MessageData();
+        data.setContent(model.getContent());
+        data.setCreatedAt(model.getCreatedAt());
+        data.setOwner(mapToUserData(model.getOwner()));
+        data.setSequenceNumber(model.getSequenceNumber());
+        return data;
+    }
+
+    public static Set<MessageData> mapAllToMessageData(Set<MessageModel> modelSet) {
+        return modelSet.stream()
+                .map(MapperUtil::mapToMessageData)
+                .collect(Collectors.toSet());
     }
 
     public static UserData mapToUserData(UserModel model) {

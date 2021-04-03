@@ -1,4 +1,4 @@
-package ua.knu.gra.data;
+package ua.knu.gra.data.auth;
 
 import lombok.Getter;
 import lombok.Setter;

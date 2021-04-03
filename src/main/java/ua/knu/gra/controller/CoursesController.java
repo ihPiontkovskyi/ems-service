@@ -1,7 +1,7 @@
 package ua.knu.gra.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ua.knu.gra.data.PrefData;
+import ua.knu.gra.data.course.PrefData;
 import ua.knu.gra.data.UserData;
 import ua.knu.gra.data.course.CourseAddData;
 import ua.knu.gra.data.course.CourseData;

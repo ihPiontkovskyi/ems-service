@@ -4,7 +4,7 @@ import com.nimbusds.jose.util.Base64;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.knu.gra.data.PrefData;
+import ua.knu.gra.data.course.PrefData;
 import ua.knu.gra.data.UserData;
 import ua.knu.gra.data.course.CourseAddData;
 import ua.knu.gra.data.course.CourseData;
@@ -52,7 +52,7 @@ public class CourseService {
         model.setDescription(addData.getDescription());
         model.setName(addData.getName());
         model.setLecturer(current);
-        model.setUid(Base64.encode(UUID.randomUUID().toString()).toString().toUpperCase());
+        model.setUid(Base64.encode(UUID.randomUUID().toString()).toString().substring(0, 8).toUpperCase());
         courseRepository.save(model);
     }
 

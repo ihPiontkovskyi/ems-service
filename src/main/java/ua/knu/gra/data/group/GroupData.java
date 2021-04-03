@@ -2,7 +2,8 @@ package ua.knu.gra.data.group;
 
 import lombok.Getter;
 import lombok.Setter;
-import ua.knu.gra.data.PostData;
+import ua.knu.gra.data.message.MessageData;
+import ua.knu.gra.data.post.PostData;
 import ua.knu.gra.data.UserData;
 
 import java.util.Set;
@@ -14,4 +15,5 @@ public class GroupData {
     private String description;
     private UserData lecturer;
     private Set<PostData> posts;
+    private Set<MessageData> messages;
 }

@@ -2,8 +2,8 @@ package ua.knu.gra.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ua.knu.gra.data.CookieData;
-import ua.knu.gra.data.LoginData;
+import ua.knu.gra.data.auth.CookieData;
+import ua.knu.gra.data.auth.LoginData;
 import ua.knu.gra.model.UserRole;
 import ua.knu.gra.repository.UserRepository;
 import ua.knu.gra.service.AuthService;

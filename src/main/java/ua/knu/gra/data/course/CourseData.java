@@ -2,7 +2,7 @@ package ua.knu.gra.data.course;
 
 import lombok.Getter;
 import lombok.Setter;
-import ua.knu.gra.data.PostData;
+import ua.knu.gra.data.post.PostData;
 import ua.knu.gra.data.task.TaskData;
 import ua.knu.gra.data.UserData;
 
