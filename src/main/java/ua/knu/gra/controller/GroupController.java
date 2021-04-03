@@ -37,9 +37,8 @@ public class GroupController {
     }
 
     @PostMapping("/{groupUid}/send-message")
-    public void sendMessage(@PathVariable String groupUid, @RequestBody MessageAddData data, HttpSession session) {
-        UserModel userModel = (UserModel) session.getAttribute("userModel");
-        groupService.sendMessage(data, groupUid, userModel);
+    public void sendMessage(@PathVariable String groupUid, @RequestBody MessageAddData data, @RequestParam String userUid) {
+        groupService.sendMessage(data, groupUid, userUid);
     }
 
     @GetMapping(value = "/{groupUid}/refresh-message", produces = APPLICATION_JSON_VALUE)

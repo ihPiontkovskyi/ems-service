@@ -14,6 +14,7 @@ import ua.knu.gra.model.GroupPreferencesModel;
 import ua.knu.gra.model.UserModel;
 import ua.knu.gra.repository.CourseRepository;
 import ua.knu.gra.repository.PrefRepository;
+import ua.knu.gra.repository.UserRepository;
 import ua.knu.gra.service.common.MapperUtil;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final PrefRepository prefRepository;
+    private final UserRepository userRepository;
 
     public List<CourseMainPageData> getAll() {
         return courseRepository.findAll()
@@ -34,7 +36,8 @@ public class CourseService {
                 .collect(Collectors.toList());
     }
 
-    public CourseData getByUid(String uid, UserModel current) {
+    public CourseData getByUid(String uid, String userUid) {
+        UserModel current = userRepository.findUserModelByUid(userUid).orElseThrow(() -> new RuntimeException("Invalid uid"));
         CourseModel course = courseRepository.findByUid(uid).orElseThrow(() -> new RuntimeException("Invalid uid"));
         if (current == null) {
             throw new RuntimeException("Invalid username");
@@ -47,7 +50,8 @@ public class CourseService {
         courseRepository.delete(courseModel);
     }
 
-    public void addCourse(CourseAddData addData, UserModel current) {
+    public void addCourse(CourseAddData addData, String userUid) {
+        UserModel current = userRepository.findUserModelByUid(userUid).orElseThrow(() -> new RuntimeException("Invalid uid"));
         CourseModel model = new CourseModel();
         model.setDescription(addData.getDescription());
         model.setName(addData.getName());
@@ -56,7 +60,8 @@ public class CourseService {
         courseRepository.save(model);
     }
 
-    public void joinCourse(String courseUid, UserModel current) {
+    public void joinCourse(String courseUid, String userUid) {
+        UserModel current = userRepository.findUserModelByUid(userUid).orElseThrow(() -> new RuntimeException("Invalid uid"));
         CourseModel course = courseRepository.findByUid(courseUid).orElseThrow(() -> new RuntimeException("Invalid uid"));
         course.getUsers().add(current);
         courseRepository.save(course);
@@ -69,7 +74,8 @@ public class CourseService {
                 .collect(Collectors.toList());
     }
 
-    public void addUserPreferences(List<PrefData> data, UserModel current) {
+    public void addUserPreferences(List<PrefData> data, String userUid) {
+        UserModel current = userRepository.findUserModelByUid(userUid).orElseThrow(() -> new RuntimeException("Invalid uid"));
         List<GroupPreferencesModel> prefs = data.stream()
                 .map(pref -> createPrefModel(pref, current.getUid()))
                 .collect(Collectors.toList());

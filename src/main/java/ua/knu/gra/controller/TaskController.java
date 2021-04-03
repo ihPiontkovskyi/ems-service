@@ -2,11 +2,9 @@ package ua.knu.gra.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ua.knu.gra.data.task.*;
-import ua.knu.gra.model.UserModel;
 import ua.knu.gra.service.TaskService;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -18,9 +16,8 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping(value = "/{courseUid}/estimate-table", produces = APPLICATION_JSON_VALUE)
-    public List<TaskEstimatedTableData> getEstimatedTask(@PathVariable String courseUid, HttpSession session) {
-        UserModel userModel = (UserModel) session.getAttribute("userModel");
-        return taskService.getForCurrent(userModel.getUid(), courseUid);
+    public List<TaskEstimatedTableData> getEstimatedTask(@PathVariable String courseUid, @RequestParam String userUid) {
+        return taskService.getForCurrent(userUid, courseUid);
     }
 
     @GetMapping(value = "/details", produces = APPLICATION_JSON_VALUE)
@@ -29,9 +26,8 @@ public class TaskController {
     }
 
     @GetMapping(value = "/{courseUid}/estimate/list", produces = APPLICATION_JSON_VALUE)
-    public List<EstimatingListingData> getEstimatingList(@PathVariable String courseUid, HttpSession session) {
-        UserModel userModel = (UserModel) session.getAttribute("userModel");
-        return taskService.getEstimatingList(courseUid, userModel);
+    public List<EstimatingListingData> getEstimatingList(@PathVariable String courseUid, @RequestParam String userUid) {
+        return taskService.getEstimatingList(courseUid, userUid);
     }
 
     @PostMapping(value = "/estimate")
@@ -45,9 +41,8 @@ public class TaskController {
     }
 
     @PostMapping(value = "/{courseUid}/{taskId}")
-    public void writeAnswer(@PathVariable String courseUid, @PathVariable Integer taskId, @RequestParam String answer, HttpSession session) {
-        UserModel userModel = (UserModel) session.getAttribute("userModel");
-        taskService.writeAnswer(answer, courseUid, userModel, taskId);
+    public void writeAnswer(@PathVariable String courseUid, @PathVariable Integer taskId, @RequestParam String answer, @RequestParam String userUid) {
+        taskService.writeAnswer(answer, courseUid, userUid, taskId);
 
     }
 }
