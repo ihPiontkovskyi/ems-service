@@ -10,6 +10,7 @@ import ua.knu.gra.model.UserModel;
 import ua.knu.gra.repository.CourseRepository;
 import ua.knu.gra.repository.RatingRepository;
 import ua.knu.gra.repository.TaskRepository;
+import ua.knu.gra.repository.UserRepository;
 import ua.knu.gra.service.common.MapperUtil;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final RatingRepository ratingRepository;
     private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
 
     public List<TaskEstimatedTableData> getForCurrent(String currentUserId, String courseUid) {
         return ratingRepository.findAll()
@@ -43,7 +45,8 @@ public class TaskService {
         taskRepository.save(task);
     }
 
-    public List<EstimatingListingData> getEstimatingList(String courseUid, UserModel current) {
+    public List<EstimatingListingData> getEstimatingList(String courseUid, String userUid) {
+        UserModel current = userRepository.findUserModelByUid(userUid).orElseThrow(() -> new RuntimeException("Invalid uid"));
         List<Integer> taskId = taskRepository.findAll()
                 .stream()
                 .filter(task -> task.getCourse().getLecturer().getUid().equals(current.getUid()))
@@ -74,10 +77,11 @@ public class TaskService {
         return MapperUtil.mapToEstimatingDetails(model);
     }
 
-    public void writeAnswer(String answer, String courseUid, UserModel user, Integer taskId) {
+    public void writeAnswer(String answer, String courseUid, String userUid, Integer taskId) {
+        UserModel current = userRepository.findUserModelByUid(userUid).orElseThrow(() -> new RuntimeException("Invalid uid"));
         RatingModel model = new RatingModel();
         model.setAnswer(answer);
-        model.setUser(user);
+        model.setUser(current);
         model.setTask(taskRepository.findById(taskId).orElseThrow(() -> new RuntimeException("No task")));
         model.setCourse(courseRepository.findByUid(courseUid).orElseThrow(() -> new RuntimeException("No course")));
         ratingRepository.save(model);

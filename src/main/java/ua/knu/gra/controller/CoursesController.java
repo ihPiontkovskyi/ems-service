@@ -1,16 +1,14 @@
 package ua.knu.gra.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ua.knu.gra.data.course.PrefData;
 import ua.knu.gra.data.UserData;
 import ua.knu.gra.data.course.CourseAddData;
 import ua.knu.gra.data.course.CourseData;
 import ua.knu.gra.data.course.CourseMainPageData;
-import ua.knu.gra.model.UserModel;
+import ua.knu.gra.data.course.PrefData;
 import ua.knu.gra.service.CourseService;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -27,9 +25,8 @@ public class CoursesController {
     }
 
     @GetMapping(value = "/{courseUid}/details", produces = APPLICATION_JSON_VALUE)
-    public CourseData getCourseDetails(@PathVariable String courseUid, HttpSession session) {
-        UserModel userModel = (UserModel) session.getAttribute("userModel");
-        return courseService.getByUid(courseUid, userModel);
+    public CourseData getCourseDetails(@PathVariable String courseUid, @RequestParam String userUid) {
+        return courseService.getByUid(courseUid, userUid);
     }
 
     @GetMapping(value = "/{courseUid}/list-user", produces = APPLICATION_JSON_VALUE)
@@ -38,15 +35,13 @@ public class CoursesController {
     }
 
     @PostMapping("/add")
-    public void addCourse(@RequestBody CourseAddData data, HttpSession session) {
-        UserModel userModel = (UserModel) session.getAttribute("userModel");
-        courseService.addCourse(data, userModel);
+    public void addCourse(@RequestBody CourseAddData data, @RequestParam String userUid) {
+        courseService.addCourse(data, userUid);
     }
 
     @PostMapping("/{courseUid}/join")
-    public void joinCourse(@PathVariable String courseUid, HttpSession session) {
-        UserModel userModel = (UserModel) session.getAttribute("userModel");
-        courseService.joinCourse(courseUid, userModel);
+    public void joinCourse(@PathVariable String courseUid, @RequestParam String userUid) {
+        courseService.joinCourse(courseUid, userUid);
     }
 
     @DeleteMapping("/{courseUid}/delete")
@@ -55,9 +50,8 @@ public class CoursesController {
     }
 
     @PostMapping("/group-prefereces")
-    public void preferUser(@RequestBody List<PrefData> prefData, HttpSession session) {
-        UserModel userModel = (UserModel) session.getAttribute("userModel");
-        courseService.addUserPreferences(prefData, userModel);
+    public void preferUser(@RequestBody List<PrefData> prefData, @RequestParam String userUid) {
+        courseService.addUserPreferences(prefData, userUid);
     }
 
     @PostMapping("/generate-groups")
