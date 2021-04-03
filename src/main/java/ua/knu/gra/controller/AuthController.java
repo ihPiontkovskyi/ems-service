@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ua.knu.gra.data.CookieData;
-import ua.knu.gra.data.LoginData;
-import ua.knu.gra.data.RegisterData;
+import ua.knu.gra.data.auth.CookieData;
+import ua.knu.gra.data.auth.LoginData;
+import ua.knu.gra.data.auth.RegisterData;
 import ua.knu.gra.model.UserRole;
 
 import javax.servlet.http.HttpSession;
@@ -31,7 +31,7 @@ public class AuthController extends AbstractController {
     }
 
     @PostMapping(value = "/register", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> login(@RequestBody RegisterData registerData) {
+    public ResponseEntity<?> register(@RequestBody RegisterData registerData) {
         registerData.setPassword(new String(getDecoder().decode(registerData.getPassword())));
         boolean result = authService.register(registerData);
         return result ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();

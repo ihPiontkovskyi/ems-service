@@ -28,6 +28,9 @@ public class GroupModel {
     @OneToMany(mappedBy = "group")
     private Set<PostModel> posts;
 
+    @OneToMany(mappedBy = "group")
+    private Set<MessageModel> messages;
+
     @OneToOne
     private UserModel lecturer;
 

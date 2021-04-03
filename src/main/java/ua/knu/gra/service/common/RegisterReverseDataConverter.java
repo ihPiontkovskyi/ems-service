@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ua.knu.gra.data.RegisterData;
+import ua.knu.gra.data.auth.RegisterData;
 import ua.knu.gra.model.UserModel;
 import ua.knu.gra.model.UserRole;
 
