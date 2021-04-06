@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface MessageRepository extends JpaRepository<MessageModel, Integer> {
-    @Query(value = "select * from messages m join groups g on m.group_id = g.id where g.uid = ?1", nativeQuery = true)
+    @Query(value = "select * from messages m join user_groups g on m.group_id = g.id where g.uid = ?1", nativeQuery = true)
     List<MessageModel> findAllByGroupUId(String groupUid);
 }
