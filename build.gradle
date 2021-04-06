@@ -32,8 +32,15 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+	testImplementation group: 'junit', name: 'junit', version: '4.12'
+	testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+	testCompile "junit:junit:4.12"
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 test {
-	useJUnitPlatform()
+	useJUnit {
+
+	}
 }
